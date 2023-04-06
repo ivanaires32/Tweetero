@@ -31,6 +31,7 @@ app.post("/sign-up", (req, res) => {
 
 app.post("/tweets", (req, res) => {
     const { username, tweet } = req.body
+    console.log(req.body)
     const logado = usuarios.find((e) => e.username === username)
     if (logado === undefined) {
         res.status(401).send("usuario não logado")
@@ -40,10 +41,18 @@ app.post("/tweets", (req, res) => {
         return
     } else if (tweets.length === 10) {
         tweets.shift()
+        const newTweet = {
+            username,
+            tweet,
+            avatar: usuarios[usuarios.length - 1].avatar
+        }
+
+        tweets.push(newTweet)
     } else {
         const newTweet = {
             username,
-            tweet
+            tweet,
+            avatar: usuarios[usuarios.length - 1].avatar
         }
 
         tweets.push(newTweet)
