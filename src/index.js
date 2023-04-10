@@ -5,8 +5,6 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-let perfil;
-
 const usuarios = []
 const tweets = []
 
@@ -14,7 +12,7 @@ app.post("/sign-up", (req, res) => {
     const { username, avatar } = req.body
 
     if (!username || !avatar) {
-        res.status(404).send("serviço fora do ar")
+        res.status(404).send("Todos os campos são obrigatorios")
         return
     }
 
@@ -26,7 +24,7 @@ app.post("/sign-up", (req, res) => {
 
     usuarios.push(conta)
 
-    res.send("ok")
+    res.status(201).send("ok")
 })
 
 app.post("/tweets", (req, res) => {
@@ -37,26 +35,19 @@ app.post("/tweets", (req, res) => {
         res.status(401).send("usuario não logado")
         return
     } else if (!username || !tweet) {
-        res.status(400).send("tweet não enviado")
+        res.status(401).send("Todos os campos são obrigatorios")
         return
     } else if (tweets.length === 10) {
         tweets.shift()
-        const newTweet = {
-            username,
-            tweet,
-            avatar: usuarios[usuarios.length - 1].avatar
-        }
-
-        tweets.push(newTweet)
-    } else {
-        const newTweet = {
-            username,
-            tweet,
-            avatar: usuarios[usuarios.length - 1].avatar
-        }
-
-        tweets.push(newTweet)
     }
+
+    const newTweet = {
+        username,
+        tweet,
+        avatar: usuarios[usuarios.length - 1].avatar
+    }
+
+    tweets.push(newTweet)
 
     res.send("Deu Certo")
 
