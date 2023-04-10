@@ -12,7 +12,7 @@ app.post("/sign-up", (req, res) => {
     const { username, avatar } = req.body
 
     if (!username || !avatar) {
-        res.status(404).send("Todos os campos são obrigatorios")
+        res.status(400).send("Todos os campos são obrigatorios")
         return
     }
 
@@ -32,10 +32,10 @@ app.post("/tweets", (req, res) => {
     console.log(req.body)
     const logado = usuarios.find((e) => e.username === username)
     if (logado === undefined) {
-        res.status(401).send("usuario não logado")
+        res.status(400).send("usuario não logado")
         return
     } else if (!username || !tweet) {
-        res.status(401).send("Todos os campos são obrigatorios")
+        res.status(400).send("Todos os campos são obrigatorios")
         return
     } else if (tweets.length === 10) {
         tweets.shift()
