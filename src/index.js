@@ -49,7 +49,7 @@ app.post("/tweets", (req, res) => {
 
     tweets.push(newTweet)
 
-    res.send("Deu Certo")
+    res.status(201).send("Deu Certo")
 
 
 })
